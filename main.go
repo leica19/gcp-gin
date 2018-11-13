@@ -1,23 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"log"
 	"net/http"
 )
 
 func main() {
-	r := gin.Default()
-	r.Static("/assets", "./assets")
-	r.LoadHTMLGlob("templates/*")
-	r.GET("/hello", func(c *gin.Context) {
-		c.String(200, "hello")
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello Go!")
 	})
 
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title": "INDEX_PAGE",
-		})
-	})
-
-	r.Run(":8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
