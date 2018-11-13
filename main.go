@@ -1,15 +1,15 @@
+
 package main
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-)
+import "github.com/gin-gonic/gin"
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello Go!")
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
 	})
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	r.Run() // listen and serve on 0.0.0.0:8080
 }
+
